@@ -21,12 +21,9 @@ function Client(name){
             }
         }
         if(this.tab === 0){
-            for(i=0 ; i<openTabs.length ; i++){
-                if(openTabs[i] === this){
-                   let index = openTabs.indexOf(this)
-                   openTabs.splice(index, 1)
-                }
-            }
+            removeClient(this)
+                
+            
         }
     }
      
@@ -38,34 +35,42 @@ function Drinks(name, price){
     this.price = price
 }
 
-let oldFashion = new Drinks("Old Fashion", 30)
-let mojito = new Drinks("Mojito", 22)
-
-let danilo = new Client("Danilo")
-let maria = new Client("Maria")
-let thais = new Client("Thais")
-let fernando = new Client("Fernando")
-let diego = new Client("Diego")
-
-let openTabs = []
-
-danilo.order(mojito, oldFashion,mojito)
-danilo.remove(mojito)
-danilo.order(oldFashion)
-thais.order(oldFashion)
-thais.order(oldFashion)
-thais.remove(oldFashion)
-thais.remove(oldFashion)
-maria.order(mojito)
-fernando.order(mojito)
-fernando.order(mojito, oldFashion)
-maria.remove(mojito)
-fernando.remove(mojito)
-fernando.remove(oldFashion)
 
 
+function removeClient(el){
+    let index = openTabs.indexOf(el)
+        openTabs.splice(index, 1)
+}
 
-console.log(openTabs)
+
+function transferTab(oldTab, newTab){
+    newTab.consumption = newTab.consumption.concat(oldTab.consumption)
+    newTab.tab = newTab.tab + oldTab.tab
+    oldTab.tab = 0
+    oldTab.consumption = []
+    removeClient(oldTab)
+    
+}
+
+
+const allNames = ["Danilo", "Thais", "Karine", "Paulo", "Diego"]
+const openTabs = []
+
+const allClients = []
+     
+  allNames.forEach(el=>{
+      let instance = new Client(el)
+      allClients.push(instance)
+
+
+  })
+
+     
+
+
+
+
+console.log(allClients.indexOf("Danilo"))
 
 
 
