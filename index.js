@@ -11,14 +11,14 @@ function Client(name){
         }
         
     }  
-    this.remove = remove =>{
+    this.remove = (...remove) =>{
         for(i=0 ; i<this.consumption.length ; i++){
-            if(this.consumption[i] === remove){
+            for(j=0 ; j < remove.length ; j++){
+            if(this.consumption[i] === remove[j]){
                 this.consumption.splice(i,1)
-                this.tab = this.tab - remove.price
-                
-                break
+                this.tab = this.tab - remove[j].price
             }
+        }break
         }
         if(this.tab === 0){
             removeClient(this)
@@ -34,6 +34,14 @@ function Drinks(name, price){
     this.name = name
     this.price = price
 }
+
+const allDrinks = [["Mojito", 22], ["Old Fashion", 30],["Cosmopolitan", 35] , ["Draft Beer", 12], ["Water", 4]]
+const objDrinks = []
+
+allDrinks.forEach(el => {
+    let instance = new Drinks(el[0], el[1])
+    objDrinks.push(instance)
+})
 
 
 
@@ -54,9 +62,10 @@ function transferTab(oldTab, newTab){
 
 
 const allNames = ["Danilo", "Thais", "Karine", "Paulo", "Diego"]
+const allClients = []
+
 const openTabs = []
 
-const allClients = []
      
   allNames.forEach(el=>{
       let instance = new Client(el)
@@ -66,11 +75,19 @@ const allClients = []
   })
 
      
+allClients[0].order(objDrinks[2])
+allClients[0].order(objDrinks[1])
+allClients[1].order(objDrinks[0])
+allClients[1].order(objDrinks[1])
+allClients[1].order(objDrinks[0])
+allClients[1].order(objDrinks[0])
+
+allClients[1].remove(objDrinks[0], objDrinks[1] )
 
 
 
 
-console.log(allClients.indexOf("Danilo"))
+console.log(openTabs)
 
 
 
